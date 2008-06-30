@@ -1,7 +1,3 @@
-# Equivalent to a header guard in C/C++
-# Used to prevent the class/module from being loaded more than once
-unless defined? Generic
-
 module Generic
 
   # :stopdoc:
@@ -42,8 +38,6 @@ module Generic
     Dir.glob(search_me).sort.each { |rb| require rb }
   end
 
-end
-
 Generic.require_all_libs_relative_to __FILE__
 
-end  # unless defined?
+end unless defined?(Generic)
