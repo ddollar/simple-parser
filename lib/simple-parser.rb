@@ -1,4 +1,4 @@
-module Generic
+module SimpleParser
 
   # :stopdoc:
   VERSION = '0.0.1'
@@ -38,6 +38,6 @@ module Generic
     Dir.glob(search_me).sort.each { |rb| require rb }
   end
 
-Generic.require_all_libs_relative_to __FILE__
+SimpleParser.require_all_libs_relative_to __FILE__
 
-end unless defined?(Generic)
+end unless defined?(SimpleParser)
