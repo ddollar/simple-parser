@@ -9,7 +9,7 @@ require 'spec/rake/verify_rcov'
 task :default => [ 'rspec:run' ]
 
 namespace :gem do
-  
+
   task :config do
     @config = OpenStruct.new
 
@@ -21,7 +21,7 @@ namespace :gem do
       '"' + file + '"'
     end.join(',')
   end
-  
+
   desc "Build the gem"
   task :build => [ 'gem:config', 'gem:spec:build' ] do
     spec = nil
@@ -63,7 +63,7 @@ namespace :gem do
 end
 
 namespace :rdoc do
-  
+
   desc 'Generate RDoc'
   rd = Rake::RDocTask.new(:build) do |rdoc|
     Rake::Task['gem:config'].invoke
@@ -73,16 +73,16 @@ namespace :rdoc do
     rdoc.options << '--line-numbers' << '--inline-source'
     rdoc.rdoc_files.include('README', 'lib/**/*.rb')
   end
-  
+
   desc 'View RDoc'
   task :view => [ :build ] do
     system %{open output/rdoc/index.html}
   end
-  
+
 end
 
 namespace :rspec do
-  
+
   desc "Run rspec tasks"
   Spec::Rake::SpecTask.new(:run) do |t|
     t.spec_files = FileList['spec/**/*_spec.rb']
@@ -93,16 +93,16 @@ namespace :rspec do
       t.rcov_opts = ['--exclude', 'bin\/rtr,examples,\/var\/lib\/gems,\/Library\/Ruby,\.autotest']
     end
   end
-  
+
   desc "Show code coverage"
   task :coverage => [ :run ] do
     system %{open output/coverage/index.html}
   end
-  
+
   desc "Verify code coverage"
   RCov::VerifyTask.new(:verify => :run) do |t|
     t.threshold = 100.0
     t.index_html = 'output/coverage/index.html'
   end
-  
+
 end
