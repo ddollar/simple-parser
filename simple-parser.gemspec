@@ -15,6 +15,6 @@ spec = Gem::Specification.new do |s|
   s.rubyforge_project = "simple-parser"
   s.require_path      = "lib"
   s.has_rdoc          = true
-  s.extra_rdoc_files  = ["README"]
+  s.extra_rdoc_files  = ["README.html"]
   
 end
