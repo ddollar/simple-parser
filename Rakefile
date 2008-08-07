@@ -98,11 +98,12 @@ namespace :rdoc do
   desc 'Generate RDoc'
   rd = Rake::RDocTask.new(:build) do |rdoc|
     Rake::Task['gem:config'].invoke
+    Rake::Task['documentation:compile'].invoke
     rdoc.title = @config.name
-    rdoc.main  = 'README'
+    rdoc.main  = 'README.html'
     rdoc.rdoc_dir = 'output/rdoc'
     rdoc.options << '--line-numbers' << '--inline-source'
-    rdoc.rdoc_files.include('README', 'lib/**/*.rb')
+    rdoc.rdoc_files.include('README.html', 'lib/**/*.rb')
   end
 
   desc 'View RDoc'
