@@ -6,6 +6,7 @@ require 'rake/rdoctask'
 require 'spec/rake/spectask'
 require 'spec/rake/verify_rcov'
 require 'FileUtils'
+require 'BlueCloth'
 
 task :default => [ 'rspec:run' ]
 
@@ -77,6 +78,19 @@ namespace :gem do
     end
 
   end
+end
+
+namespace :documentation do
+
+  desc 'Compile HTML documentation from Markdown'
+  task :compile do
+    Dir['**/*.markdown'].each do |file|
+      html_file = file.gsub('.markdown', '.html')
+      html = File.open(file, 'r') { |f| BlueCloth.new(f.read).to_html }
+      File.open(html_file, 'w') { |f| f.puts html }
+    end
+  end
+
 end
 
 namespace :rdoc do
