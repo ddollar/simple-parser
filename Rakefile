@@ -5,10 +5,27 @@ require 'rake'
 require 'rake/rdoctask'
 require 'spec/rake/spectask'
 require 'spec/rake/verify_rcov'
+require 'FileUtils'
 
 task :default => [ 'rspec:run' ]
 
 namespace :gem do
+
+  task :customize do
+    raise 'GEM required' unless name = ENV['GEM']
+    raise 'CONST required' unless const = ENV['CONST']
+
+    raise 'already configured' unless File.exists?('lib/generic')
+
+    lib = File.open('lib/generic.rb', 'r') { |f| f.read.gsub('Generic', const) }
+    File.open('lib/generic.rb', 'w') { |f| f.puts lib }
+
+    FileUtils.mv('lib/generic',    "lib/#{name}")
+    FileUtils.mv('lib/generic.rb', "lib/#{name}.rb")
+
+    editor = ENV['EDITOR'] || 'vi'
+    system "#{editor} config/gem.rb"
+  end
 
   task :config do
     @config = OpenStruct.new
